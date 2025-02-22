@@ -2,24 +2,19 @@
 source <(curl -s https://raw.githubusercontent.com/mstinaff/ProxmoxVE/main/misc/build.func)
 # Copyright (c) 2021-2025 community-scripts ORG
 # Author: remz1337
-# License: MIT
-# https://github.com/mstinaff/ProxmoxVE/raw/main/LICENSE
+# License: MIT | https://github.com/mstinaff/ProxmoxVE/raw/main/LICENSE
+# Source: https://goauthentik.io/
 
-# App Default Values
 APP="Authentik"
 var_tags="identity-provider"
-var_disk="15"
+var_disk="12"
 var_cpu="6"
 var_ram="8192"
 var_os="debian"
 var_version="12"
 var_unprivileged="1"
 
-# App Output & Base Settings
 header_info "$APP"
-base_settings
-
-# Core
 variables
 color
 catch_errors
@@ -51,6 +46,13 @@ function update_script() {
     npm install &>/dev/null
     npm run build &>/dev/null
     msg_ok "Built ${APP} website"
+
+    msg_info "Building ${APP} server"
+    cd /opt/authentik
+    go mod download
+    go build -o /go/authentik ./cmd/server
+    go build -o /opt/authentik/authentik-server /opt/authentik/cmd/server/
+    msg_ok "Built ${APP} server"
 
     msg_info "Installing Python Dependencies"
     cd /opt/authentik
