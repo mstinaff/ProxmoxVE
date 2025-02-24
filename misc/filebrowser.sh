@@ -26,7 +26,7 @@ INFO="${BL}ℹ️${CL}"
 APP="FileBrowser"
 INSTALL_PATH="/usr/local/bin/filebrowser"
 SERVICE_PATH="/etc/systemd/system/filebrowser.service"
-DB_PATH="/usr/local/community-scripts/filebrowser.db"
+DB_PATH="/usr/local/mstinaff/filebrowser.db"
 IP=$(hostname -I | awk '{print $1}')
 DEFAULT_PORT=8080
 
@@ -82,15 +82,15 @@ if [[ "${install_prompt,,}" =~ ^(y|yes)$ ]]; then
     msg_ok "Installed ${APP}"
 
     msg_info "Creating FileBrowser directory"
-    mkdir -p /usr/local/community-scripts
-    chown root:root /usr/local/community-scripts
-    chmod 755 /usr/local/community-scripts
+    mkdir -p /usr/local/mstinaff
+    chown root:root /usr/local/mstinaff
+    chmod 755 /usr/local/mstinaff
     msg_ok "Directory created successfully"
 
     read -r -p "Would you like to use No Authentication? (y/N): " auth_prompt
     if [[ "${auth_prompt,,}" =~ ^(y|yes)$ ]]; then
         msg_info "Configuring No Authentication"
-          cd /usr/local/community-scripts
+          cd /usr/local/mstinaff
           filebrowser config init -a '0.0.0.0' -p "$PORT" -d "$DB_PATH" &>/dev/null
           filebrowser config set -a '0.0.0.0' -p "$PORT" -d "$DB_PATH" &>/dev/null
           filebrowser config init --auth.method=noauth &>/dev/null
@@ -99,7 +99,7 @@ if [[ "${install_prompt,,}" =~ ^(y|yes)$ ]]; then
         msg_ok "No Authentication configured"
     else
         msg_info "Setting up default authentication"
-        cd /usr/local/community-scripts
+        cd /usr/local/mstinaff
         filebrowser config init -a '0.0.0.0' -p "$PORT" -d "$DB_PATH" &>/dev/null
         filebrowser config set -a '0.0.0.0' -p "$PORT" -d "$DB_PATH" &>/dev/null
         filebrowser users add admin helper-scripts.com --perm.admin --database "$DB_PATH" &>/dev/null
@@ -114,7 +114,7 @@ After=network-online.target
 
 [Service]
 User=root
-WorkingDirectory=/usr/local/community-scripts
+WorkingDirectory=/usr/local/mstinaff
 ExecStart=/usr/local/bin/filebrowser -r / -d "$DB_PATH" -p "$PORT"
 Restart=always
 

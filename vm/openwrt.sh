@@ -7,7 +7,7 @@
 # https://github.com/mstinaff/ProxmoxVE/raw/main/LICENSE
 # Based on work from https://i12bretro.github.io/tutorials/0405.html
 
-source /dev/stdin <<< $(wget -qLO - https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main/misc/api.func)
+source /dev/stdin <<< $(wget -qLO - https://raw.githubusercontent.com/mstinaff/ProxmoxVE/main/misc/api.func)
 
 function header_info {
   clear

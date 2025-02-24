@@ -14,7 +14,7 @@ variables() {
   RANDOM_UUID="$(cat /proc/sys/kernel/random/uuid)" # generates a random UUID and sets it to the RANDOM_UUID variable.
 }
 
-source <(curl -s https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main/misc/api.func)
+source <(curl -s https://raw.githubusercontent.com/mstinaff/ProxmoxVE/main/misc/api.func)
 
 # This function sets various color variables using ANSI escape codes for formatting text in the terminal.
 color() {
@@ -69,7 +69,7 @@ catch_errors() {
 
 # This function is called when an error occurs. It receives the exit code, line number, and command that caused the error, and displays an error message.
 error_handler() {
-  source /dev/stdin <<< $(wget -qLO - https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main/misc/api.func)																															   
+  source /dev/stdin <<< $(wget -qLO - https://raw.githubusercontent.com/mstinaff/ProxmoxVE/main/misc/api.func)																															   
   if [ -n "$SPINNER_PID" ] && ps -p $SPINNER_PID > /dev/null; then kill $SPINNER_PID > /dev/null; fi
   printf "\e[?25h"
   local exit_code="$?"
@@ -181,12 +181,12 @@ maxkeys_check() {
   failure=0
   if [[ "$used_lxc_keys" -gt "$threshold_keys" ]]; then
     echo -e "${CROSS}${RD} Warning: Key usage is near the limit (${used_lxc_keys}/${per_user_maxkeys}).${CL}"
-    echo -e "${INFO} Suggested action: Set ${GN}kernel.keys.maxkeys=${new_limit_keys}${CL} in ${BOLD}/etc/sysctl.d/98-community-scripts.conf${CL}."
+    echo -e "${INFO} Suggested action: Set ${GN}kernel.keys.maxkeys=${new_limit_keys}${CL} in ${BOLD}/etc/sysctl.d/98-mstinaff.conf${CL}."
     failure=1
   fi
   if [[ "$used_lxc_bytes" -gt "$threshold_bytes" ]]; then
     echo -e "${CROSS}${RD} Warning: Key byte usage is near the limit (${used_lxc_bytes}/${per_user_maxbytes}).${CL}"
-    echo -e "${INFO} Suggested action: Set ${GN}kernel.keys.maxbytes=${new_limit_bytes}${CL} in ${BOLD}/etc/sysctl.d/98-community-scripts.conf${CL}."
+    echo -e "${INFO} Suggested action: Set ${GN}kernel.keys.maxbytes=${new_limit_bytes}${CL} in ${BOLD}/etc/sysctl.d/98-mstinaff.conf${CL}."
     failure=1
   fi
 
@@ -805,9 +805,9 @@ diagnostics_check(){
           cat <<EOF>/usr/local/mstinaff/diagnostics
 DIAGNOSTICS=yes
 
-#This file is used to store the diagnostics settings for the Community-Scripts API.
+#This file is used to store the diagnostics settings for the mstinaff API.
 #https://github.com/mstinaff/ProxmoxVE/discussions/1836
-#Your diagnostics will be sent to the Community-Scripts API for troubleshooting/statistical purposes.
+#Your diagnostics will be sent to the mstinaff API for troubleshooting/statistical purposes.
 #You can review the data at https://mstinaff.github.io/ProxmoxVE/data
 #If you do not wish to send diagnostics, please set the variable 'DIAGNOSTICS' to "no" in /usr/local/mstinaff/diagnostics, or use the menue.
 #This will disable the diagnostics feature.
@@ -832,9 +832,9 @@ EOF
       cat <<EOF >/usr/local/mstinaff/diagnostics
 DIAGNOSTICS=no
 
-#This file is used to store the diagnostics settings for the Community-Scripts API.
+#This file is used to store the diagnostics settings for the mstinaff API.
 #https://github.com/mstinaff/ProxmoxVE/discussions/1836
-#Your diagnostics will be sent to the Community-Scripts API for troubleshooting/statistical purposes.
+#Your diagnostics will be sent to the mstinaff API for troubleshooting/statistical purposes.
 #You can review the data at https://mstinaff.github.io/ProxmoxVE/data
 #If you do not wish to send diagnostics, please set the variable 'DIAGNOSTICS' to "no" in /usr/local/mstinaff/diagnostics, or use the menue.
 #This will disable the diagnostics feature.

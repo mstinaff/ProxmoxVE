@@ -4,7 +4,7 @@
 # Author: thost96 (thost96)
 # License: MIT | https://github.com/mstinaff/ProxmoxVE/raw/main/LICENSE
 
-source /dev/stdin <<< $(wget -qLO - https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main/misc/api.func)
+source /dev/stdin <<< $(wget -qLO - https://raw.githubusercontent.com/mstinaff/ProxmoxVE/main/misc/api.func)
 
 function header_info {
   clear
