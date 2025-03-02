@@ -65,7 +65,7 @@ source <(curl -s https://raw.githubusercontent.com/mstinaff/ProxmoxVE/main/misc/
 Example:
 
 ```bash
-# Copyright (c) 2021-2025 community-scripts ORG
+# Copyright (c) 2021-2025 mstinaff ORG
 # Author: [YourUserName]
 # License: MIT | https://github.com/mstinaff/ProxmoxVE/raw/main/LICENSE
 # Source: [SOURCE_URL]
@@ -95,7 +95,7 @@ Example:
 >| Variable | Description | Notes |
 >|----------|-------------|-------|
 >| `APP` | Application name | Must match ct\AppName.sh |
->| `var_tags` | Proxmox display tags without Spaces, only ; | Limit the number |  
+>| `TAGS` | Proxmox display tags without Spaces, only ; | Limit the number |  
 >| `var_cpu` | CPU cores | Number of cores |
 >| `var_ram` | RAM | In MB |
 >| `var_disk` | Disk capacity | In GB |
@@ -193,13 +193,13 @@ wget -q
 unzip -q
 ```
 
-- If a command does not come with this functionality use `$STD` to suppress it's output.
+- If a command does not come with this functionality use `&>/dev/null` to suppress it's output.
 
 Example:
 
 ```bash
-$STD php artisan migrate --force 
-$STD php artisan config:clear 
+php artisan migrate --force &>/dev/null
+php artisan config:clear &>/dev/null
 ```
 
 ### 3.5 **Backups**
@@ -247,7 +247,7 @@ function update_script() {
         msg_error "No ${APP} Installation Found!"
         exit
     fi
-    msg_error "Currently we don't provide an update function for this ${APP}."
+    msg_error "There is currently no automatic update function for ${APP}."
     exit
 }
 ```
